@@ -1,0 +1,73 @@
+<?xml  version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+    <!-- 配置注解驱动 -->
+	<mvc:annotation-driven>
+
+	</mvc:annotation-driven>
+	<!-- DefaultAnnotationHandlerMapping：将请求映射给使用@RequestMapping注解的控制器和控制方法 -->
+	<!-- SimpleUrlHandlerMapping: 使用定义在Spring应用上下文的属性集合将控制器映射到URL -->
+	<!-- <mvc:anntation-driven>这一个标签就包含了多个处理器，所以使用这个标签就不用写上面两个的bean了 -->
+	<!-- 扫描当前包下及子包下带有@Controller注释的BEAN -->
+    <context:component-scan base-package="com.xiaozhaohelper.project" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+	
+	<mvc:view-controller path="/" view-name="forward:/login"/>
+	<mvc:default-servlet-handler/>
+	<!-- 映射静态资源 -->
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
+    <mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
+    <mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
+
+	
+    <!-- 配置视图解析器 -->
+	<bean id="jspViewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 解析jsp页面的jstl标签 -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+    <!--国际化的消息资源文件 -->
+	<!-- <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" >
+		    <list>
+                <value>/WEB-INF/messages.properties</value>
+            </list>
+        </property>
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>-->
+	
+	 <!-- 资源文件配置 -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:config/resources.properties</value>
+            </list>
+        </property>
+    </bean>
+	
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!--one of the properties available;the maximum file size in bytes-->
+        <property name="maxUploadSize" value="100000"/>
+    </bean>
+</beans>

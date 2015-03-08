@@ -1,14 +1,10 @@
 <?xml  version="1.0" encoding="utf-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -18,59 +14,63 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <!-- 开启注解 -->
+	<!-- 开启注解  -->
 	<context:annotation-config />
 	<!-- 扫描当前包下及子包下的所有类，除带有@Controller注释的类 -->
 	<context:component-scan base-package="com.xiaozhaohelper.project">
-    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-    
-    <!-- 数据访问层配置 -->
-    <import resource="classpath:config/dataSource.xml" />
-    
-    <!-- 资源文件配置 -->
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:config/resources.properties</value>
-            </list>
-        </property>
-    </bean>
-    
-    <!-- Hibernate SessionFactory配置 -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 数据访问层配置 -->
+	<import resource="classpath:dataSource.xml" />
+
+	<!-- 资源文件配置 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:resources.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Hibernate SessionFactory配置 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan">
 			<list>
-				<value>com.xiaozhaohelper.project.model</value>
+				<value>com.xiaozhaohelper.project</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
 			<props>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
-                <prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
-                <prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
-<!--                 <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop>
- -->                <prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
-                <!-- <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop>
-                <prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop>
-                <prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop>
-                <prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop>
-                <prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</prop> -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<prop key="hibernate.query.substitutions">${hibernate.query.substitutions}</prop>
+				<prop key="hibernate.default_batch_fetch_size">${hibernate.default_batch_fetch_size}</prop>
+				<prop key="hibernate.max_fetch_depth">${hibernate.max_fetch_depth}</prop>
+				<!-- <prop key="hibernate.generate_statistics">${hibernate.generate_statistics}</prop> -->
+				<prop key="hibernate.bytecode.use_reflection_optimizer">${hibernate.bytecode.use_reflection_optimizer}</prop>
+				<!-- <prop key="hibernate.cache.use_second_level_cache">${hibernate.cache.use_second_level_cache}</prop> 
+					<prop key="hibernate.cache.use_query_cache">${hibernate.cache.use_query_cache}</prop> 
+					<prop key="hibernate.cache.region.factory_class">${hibernate.cache.region.factory_class}</prop> 
+					<prop key="hibernate.cache.use_structured_entries">${hibernate.cache.use_structured_entries}</prop> 
+					<prop key="hibernate.cache.provider_configuration_file_resource_path">${hibernate.cache.provider_configuration_file_resource_path}</prop> -->
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-	
-	<!-- 启用注解描述事物 -->
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
-	
+
+	<!-- 启用注解描述事物  -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
 </beans>

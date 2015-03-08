@@ -30,7 +30,7 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 	
-	<mvc:view-controller path="/" view-name="forward:/login"/>
+	<mvc:view-controller path="/" view-name="forward:/index"/>
 	<mvc:default-servlet-handler/>
 	<!-- 映射静态资源 -->
 	<mvc:resources mapping="/images/**" location="/images/" />
@@ -60,7 +60,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:config/resources.properties</value>
+                <value>classpath:resources.properties</value>
             </list>
         </property>
     </bean>
